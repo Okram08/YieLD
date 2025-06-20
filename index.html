@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>G12 - Funding Rates</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <style>
+    :root {
+      --primary-color: #3ee6e0;
+      --secondary-color: #3a8dde;
+      --bg-color: #0a101a;
+      --bg-dark: #05070b;
+      --text-color: #eaf6ff;
+      --muted-color: #b2c2d6;
+      --accent-light: rgba(62, 230, 224, 0.55);
+    }
+    html, body {
+      scroll-behavior: smooth;
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      color: var(--text-color);
+      background: radial-gradient(ellipse at top right, var(--bg-color) 0%, var(--bg-dark) 100%);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    .background-shape, .background-shape-2 {
+      position: fixed;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .background-shape {
+      top: -250px; left: -250px;
+      width: 900px; height: 900px;
+      background: radial-gradient(circle at 60% 40%, var(--primary-color) 0%, var(--secondary-color) 60%, transparent 100%);
+      filter: blur(60px);
+      opacity: 0.4;
+      animation: blobMove 20s ease-in-out infinite alternate;
+    }
+    .background-shape-2 {
+      top: 100px; right: -200px;
+      width: 700px; height: 700px;
+      background: radial-gradient(circle at 40% 60%, var(--secondary-color) 0%, var(--primary-color) 60%, transparent 100%);
+      filter: blur(50px);
+      opacity: 0.3;
+      animation: blobMove2 25s ease-in-out infinite alternate;
+    }
+    @keyframes blobMove {
+      0% { transform: scale(1) translate(0,0);}
+      50% { transform: scale(1.1) translate(50px, 60px);}
+      100% { transform: scale(1.15) translate(80px, 40px);}
+    }
+    @keyframes blobMove2 {
+      0% { transform: scale(1) translate(0,0);}
+      50% { transform: scale(0.9) translate(-40px, -30px);}
+      100% { transform: scale(0.85) translate(-70px, -20px);}
+    }
+    .logo-glow {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      margin-bottom: 0.2rem;
+    }
+    .logo-glow::before {
+      content: "";
+      position: absolute;
+      width: 340px; height: 340px;
+      border-radius: 50%;
+      background: radial-gradient(circle, var(--primary-color) 0%, var(--secondary-color) 70%, transparent 100%);
+      filter: blur(32px);
+      opacity: 0.25;
+      z-index: 0;
+      left: 50%; top: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+    .logo-g12 {
+      height: 200px;
+      z-index: 1;
+      max-width: 90vw;
+      object-fit: contain;
+      background: transparent !important;
+      border-radius: 22px;
+      box-shadow: none !important;
+      filter: none !important;
+      transition: opacity 0.3s;
+    }
+    @media (max-width: 900px) {
+      .logo-g12 { height: 130px; }
+      .logo-glow::before { width: 180px; height: 180px; }
+    }
+    @media (max-width: 700px) {
+      .logo-g12 { height: 70px; }
+      .logo-glow::before { width: 80px; height: 80px; }
+    }
+    header {
+      padding: 3.2rem 2rem 1.5rem 2rem;
+      text-align: center;
+      position: relative;
+    }
+    nav.desktop-nav {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+      margin: 1.5rem auto 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: transparent !important;
+      backdrop-filter: blur(4px);
+      padding: 0.8rem;
+      border-radius: 12px;
+      max-width: 800px;
+    }
+    nav.desktop-nav a {
+      color: var(--primary-color);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.1rem;
+      position: relative;
+      padding: 0.3rem 0.6rem;
+      transition: color 0.2s;
+    }
+    nav.desktop-nav a[aria-current="page"] {
+      color: #fff;
+      font-weight: 700;
+    }
+    nav.desktop-nav a:hover, nav.desktop-nav a:focus {
+      color: #fff;
+    }
+    nav.desktop-nav a::after {
+      content: '';
+      position: absolute;
+      height: 2px;
+      width: 0;
+      bottom: 0;
+      left: 0;
+      background: var(--primary-color);
+      transition: width 0.3s;
+    }
+    nav.desktop-nav a:hover::after, nav.desktop-nav a:focus::after {
+      width: 100%;
+    }
+    .burger {
+      display: none;
+      position: absolute;
+      top: 2.2rem;
+      right: 2rem;
+      width: 38px;
+      height: 38px;
+      background: none;
+      border: none;
+      outline: none;
+      cursor: pointer;
+      z-index: 1001;
+    }
+    .burger span {
+      display: block;
+      width: 28px;
+      height: 4px;
+      margin: 6px auto;
+      background: linear-gradient(90deg, var(--secondary-color), var(--primary-color));
+      border-radius: 2px;
+      transition: 0.4s;
+    }
+    .burger.active span:nth-child(1) {
+      transform: translateY(10px) rotate(45deg);
+    }
+    .burger.active span:nth-child(2) {
+      opacity: 0;
+    }
+    .burger.active span:nth-child(3) {
+      transform: translateY(-10px) rotate(-45deg);
+    }
+    .mobile-nav-overlay {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(5,7,11,0.85);
+      backdrop-filter: blur(4px);
+      transition: opacity 0.3s;
+    }
+    .mobile-nav-overlay.open {
+      display: block;
+      animation: fadeIn 0.25s;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    nav.mobile-nav {
+      position: fixed;
+      top: 0; right: 0;
+      width: 80vw; max-width: 320px;
+      height: 100vh;
+      background: rgba(18,22,32,0.98);
+      box-shadow: -2px 0 18px rgba(62,230,224,0.13);
+      border-left: 1.5px solid rgba(62,230,224,0.12);
+      z-index: 1002;
+      transform: translateX(100%);
+      transition: transform 0.3s;
+      display: flex;
+      flex-direction: column;
+      padding: 2.5rem 1.5rem;
+      gap: 2rem;
+    }
+    nav.mobile-nav.open {
+      transform: translateX(0);
+    }
+    nav.mobile-nav a {
+      color: var(--primary-color);
+      font-size: 1.15rem;
+      font-weight: 600;
+      text-decoration: none;
+      margin-bottom: 1rem;
+      letter-spacing: 0.03em;
+      transition: color 0.2s;
+    }
+    nav.mobile-nav a[aria-current="page"] {
+      color: #fff;
+      font-weight: 700;
+    }
+    nav.mobile-nav a:hover, nav.mobile-nav a:focus {
+      color: #fff;
+    }
+    @media (max-width: 900px) {
+      nav.desktop-nav {
+        display: none;
+      }
+      .burger {
+        display: block;
+      }
+    }
+    @media (min-width: 901px) {
+      .mobile-nav-overlay,
+      nav.mobile-nav {
+        display: none !important;
+      }
+    }
+    .glass-card {
+      background: rgba(18,22,32,0.92);
+      border-radius: 20px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+      padding: 2.5rem 1.5rem;
+      max-width: 900px;
+      margin: 2rem auto;
+      text-align: center;
+      border: 1px solid rgba(62,230,224,0.08);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      animation: fadeInUp 1.5s;
+    }
+    .glass-card:hover {
+      transform: scale(1.015);
+      box-shadow: 0 10px 40px var(--accent-light);
+    }
+    .glass-card h1 {
+      font-size: 2rem;
+      background: linear-gradient(90deg, var(--secondary-color), var(--primary-color));
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: bold;
+      margin-bottom: 1.2rem;
+    }
+    .badge {
+      display: inline-block;
+      background: linear-gradient(90deg, #38a1db 0%, #4fd1c5 100%);
+      color: #fff;
+      font-size: 0.93em;
+      border-radius: 8px;
+      padding: 0.18em 0.7em;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      margin-left: 0.3em;
+    }
+    .refresh-btn {
+      display: block;
+      margin: 0 auto 1.2rem auto;
+      background: linear-gradient(90deg,#38a1db 0%,#4fd1c5 100%);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      padding: 0.7em 1.5em;
+      font-size: 1.08em;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(31,38,135,0.07);
+      transition: background 0.2s, transform 0.1s;
+    }
+    .refresh-btn:hover {
+      background: linear-gradient(90deg,#4fd1c5 0%,#38a1db 100%);
+      transform: translateY(-2px) scale(1.03);
+    }
+    .table-container {
+      width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      margin-top: 1.5rem;
+    }
+    table {
+      width: 100%;
+      min-width: 700px;
+      border-collapse: separate;
+      border-spacing: 0;
+      background: rgba(255,255,255,0.04);
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 2px 12px 0 rgba(31, 38, 135, 0.08);
+    }
+    th, td {
+      padding: 1rem 0.6rem;
+      text-align: center;
+      font-size: 1.08rem;
+      white-space: nowrap;
+    }
+    th {
+      background: rgba(44, 83, 100, 0.75);
+      color: #b7eaff;
+      font-weight: 700;
+      border-bottom: 2px solid #38a1db;
+      letter-spacing: 0.04em;
+    }
+    tr:not(:last-child) td {
+      border-bottom: 1px solid rgba(72, 202, 228, 0.10);
+    }
+    td {
+      color: #eaf6fb;
+      transition: background 0.2s;
+      cursor: pointer;
+    }
+    tr:hover td {
+      background: rgba(72, 202, 228, 0.07);
+    }
+    .positive {
+      color: #38e38d;
+      font-weight: 700;
+    }
+    .negative {
+      color: #ff6b81;
+      font-weight: 700;
+    }
+    .apy-badge {
+      display: inline-block;
+      padding: 0.2em 0.7em;
+      border-radius: 12px;
+      font-size: 1.1em;
+      font-weight: 700;
+      background: linear-gradient(90deg,#38a1db 0%,#4fd1c5 100%);
+      color: #fff;
+      margin: 0 0.2em;
+      letter-spacing: 0.03em;
+    }
+    .chart-row td {
+      background: #1a2a3b !important;
+      padding: 1em 0.6em !important;
+      border-bottom: none !important;
+      cursor: default !important;
+    }
+    .chart-container {
+      width: 100%;
+      max-width: 800px;
+      margin: 0 auto;
+      background: rgba(44, 83, 100, 0.18);
+      border-radius: 15px;
+      box-shadow: 0 2px 8px rgba(31,38,135,0.06);
+      padding: 1em 0.5em 1em 0.5em;
+    }
+    @media (max-width: 700px) {
+      .glass-card {
+        padding: 1rem 0.2rem 1.2rem 0.2rem;
+      }
+      .glass-card h1 {
+        font-size: 1.1rem;
+        margin-bottom: 1.2rem;
+      }
+      .refresh-btn {
+        font-size: 1em;
+        padding: 0.6em 1.1em;
+        margin-bottom: 0.7em;
+      }
+      table {
+        font-size: 0.97em;
+        min-width: 620px;
+      }
+      th, td {
+        padding: 0.7em 0.4em;
+      }
+    }
+    @media (max-width: 400px) {
+      table {
+        min-width: 420px;
+      }
+      th, td {
+        font-size: 0.92em;
+        padding: 0.5em 0.2em;
+      }
+    }
+    footer {
+      background: var(--bg-dark);
+      padding: 2rem;
+      text-align: center;
+      font-size: 0.9rem;
+      color: #888;
+      margin-top: 4rem;
+      letter-spacing: 1px;
+      position: relative;
+      z-index: 2;
+    }
+    footer nav {
+      margin-top: 1rem;
+    }
+    footer nav a {
+      color: #888;
+      margin: 0 0.5rem;
+      text-decoration: none;
+    }
+    footer nav a:hover {
+      color: #fff;
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(32px);}
+      to { opacity: 1; transform: translateY(0);}
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div class="background-shape"></div>
+  <div class="background-shape-2"></div>
+  <header>
+    <div class="logo-glow">
+      <img class="logo-g12" src="G1.png" alt="Logo G12">
+    </div>
+    <h1 class="hero-title">Funding Rates & Arbitrage</h1>
+    <nav class="desktop-nav">
+      <a href="index.html">Accueil</a>
+      <a href="litepaper.html">Lite Paper</a>
+      <a href="blog.html">Blog</a>
+      <a href="performances.html">Performances</a>
+      <a href="funding.html" aria-current="page">Funding Rates</a>
+    </nav>
+    <button class="burger" aria-label="Ouvrir le menu" aria-controls="mobile-menu" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    <div class="mobile-nav-overlay"></div>
+    <nav class="mobile-nav" id="mobile-menu" aria-hidden="true">
+      <a href="index.html">Accueil</a>
+      <a href="litepaper.html">Lite Paper</a>
+      <a href="blog.html">Blog</a>
+      <a href="performances.html">Performances</a>
+      <a href="funding.html" aria-current="page">Funding Rates</a>
+    </nav>
+  </header>
+
+  <section class="glass-card">
+    <h1>📊 Arbitrage Funding Rate <span class="badge">VEST vs Paradex</span></h1>
+    <button class="refresh-btn" onclick="update()">🔄 Actualiser</button>
+    <div class="table-container">
+      <table id="main-table">
+        <thead>
+          <tr>
+            <th>Token</th>
+            <th>APY estimé (%)</th>
+            <th>Long sur</th>
+            <th>Short sur</th>
+            <th>Funding Paradex</th>
+            <th>Funding VEST</th>
+            <th>Dernier update</th>
+          </tr>
+        </thead>
+        <tbody id="body"></tbody>
+      </table>
+    </div>
+    <div style="text-align:center; margin-top:1.2rem; color:#b7eaff; font-size:0.98em;">
+      Cliquez sur "Actualiser" pour recharger les données.<br>
+      Cliquez sur une ligne pour voir la courbe APY 7j.<br>
+      Si aucun APY n'est indiqué, c'est que l'algorithme estime que l'arbitrage n'est pas profitable.
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 G12. Tous droits réservés.</p>
+    <nav>
+      <a href="#">Mentions légales</a>
+      <a href="#">Politique de confidentialité</a>
+      <a href="mailto:contact@g12.com">Contact</a>
+    </nav>
+  </footer>
+  <script>
+    // Burger menu JS
+    const burger = document.querySelector('.burger');
+    const mobileNav = document.querySelector('.mobile-nav');
+    const overlay = document.querySelector('.mobile-nav-overlay');
+    function toggleMobileMenu() {
+      burger.classList.toggle('active');
+      mobileNav.classList.toggle('open');
+      overlay.classList.toggle('open');
+      burger.setAttribute('aria-expanded', burger.classList.contains('active'));
+      mobileNav.setAttribute('aria-hidden', !burger.classList.contains('active'));
+      document.body.style.overflow = burger.classList.contains('active') ? 'hidden' : '';
+    }
+    burger.addEventListener('click', toggleMobileMenu);
+    overlay.addEventListener('click', toggleMobileMenu);
+    window.addEventListener('resize', function() {
+      if(window.innerWidth > 900) {
+        burger.classList.remove('active');
+        mobileNav.classList.remove('open');
+        overlay.classList.remove('open');
+        document.body.style.overflow = '';
+      }
+    });
+
+    // Funding table JS (reprend la logique de ta page funding)
+    const pairs = [
+      { paradex: "HYPE-USD-PERP", vest: "HYPE-PERP" },
+      { paradex: "S-USD-PERP", vest: "S-PERP" },
+      { paradex: "ETH-USD-PERP", vest: "ETH-PERP" },
+      { paradex: "SEI-USD-PERP", vest: "SEI-PERP" },
+      { paradex: "SOL-USD-PERP", vest: "SOL-PERP" },
+      { paradex: "BERA-USD-PERP", vest: "BERA-PERP" },
+      { paradex: "UNI-USD-PERP", vest: "UNI-PERP" },
+      { paradex: "SPX-USD-PERP", vest: "SPX-PERP" },
+      { paradex: "BTC-USD-PERP", vest: "BTC-PERP" }
+    ];
+
+    const FUNDING_FREQ = {
+      paradex: 3,   // 3 fois par jour (8h)
+      vest: 24      // 24 fois par jour (1h)
+    };
+
+    function extractTokenName(pairName) {
+      return pairName.split('-')[0];
+    }
+
+    async function getParadexRate(market) {
+      const url = `https://corsproxy.io/?https://api.prod.paradex.trade/v1/funding/data?market=${market}`;
+      const res = await fetch(url);
+      if (!res.ok) throw new Error(`Paradex API ${res.status}`);
+      const json = await res.json();
+      return parseFloat(json.results?.[0]?.funding_rate);
+    }
+
+    async function getVestRate(symbol) {
+      const url = `https://corsproxy.io/?https://serverprod.vest.exchange/v2/funding/history?symbol=${symbol}&limit=1`;
+      const res = await fetch(url);
+      if (!res.ok) throw new Error(`VEST API ${res.status}`);
+      const json = await res.json();
+      return parseFloat(json?.[0]?.oneHrFundingRate);
+    }
+
+    // --- HISTORIQUE VEST sur 7j (168 points) ---
+    async function getVestHistory(symbol, limit=168) {
+      const url = `https://corsproxy.io/?https://serverprod.vest.exchange/v2/funding/history?symbol=${symbol}&limit=${limit}`;
+      const res = await fetch(url);
+      if (!res.ok) throw new Error(`VEST API ${res.status}`);
+      const json = await res.json();
+      return json.map(e => ({
+        rate: parseFloat(e.oneHrFundingRate),
+        ts: e.ts || e.timestamp || null
+      })).filter(x => !isNaN(x.rate));
+    }
+
+    // --- HISTORIQUE PARADEX sur 7j (21 points) ---
+    async function getParadexHistory(market, limit=21) {
+      const end = Date.now();
+      const start = end - 7*24*60*60*1000;
+      const url = `https://corsproxy.io/?https://api.prod.paradex.trade/v1/funding/data?market=${market}&start_at=${start}&end_at=${end}&page_size=${limit}`;
+      const res = await fetch(url);
+      if (!res.ok) throw new Error(`Paradex API ${res.status}`);
+      const json = await res.json();
+      return (json.results || [])
+        .map(e => ({
+          rate: parseFloat(e.funding_rate),
+          ts: e.created_at
+        }))
+        .filter(x => !isNaN(x.rate))
+        .sort((a, b) => a.ts - b.ts);
+    }
+
+    function decidePositions(p, v) {
+      const TOL = 0.00001;
+      const apy_paradex = p * FUNDING_FREQ.paradex * 365 * 100;
+      const apy_vest = v * FUNDING_FREQ.vest * 365 * 100;
+      const p_sign = p > TOL ? 1 : (p < -TOL ? -1 : 0);
+      const v_sign = v > TOL ? 1 : (v < -TOL ? -1 : 0);
+
+      if (p_sign === -1 && v_sign === 1) {
+        const profit = apy_vest - apy_paradex;
+        if (profit > 0) {
+          return { longExchange: 'Paradex', shortExchange: 'VEST', apyDiff: profit.toFixed(2) };
+        }
+      } else if (p_sign === 1 && v_sign === -1) {
+        const profit = apy_paradex - apy_vest;
+        if (profit > 0) {
+          return { longExchange: 'VEST', shortExchange: 'Paradex', apyDiff: profit.toFixed(2) };
+        }
+      }
+      if (p_sign === -1 && v_sign === 0) {
+        const profit = -apy_paradex;
+        if (profit > 0) {
+          return { longExchange: 'Paradex', shortExchange: 'VEST', apyDiff: profit.toFixed(2) };
+        }
+      }
+      if (v_sign === -1 && p_sign === 0) {
+        const profit = -apy_vest;
+        if (profit > 0) {
+          return { longExchange: 'VEST', shortExchange: 'Paradex', apyDiff: profit.toFixed(2) };
+        }
+      }
+      return { longExchange: '-', shortExchange: '-', apyDiff: '0.00' };
+    }
+
+    function getApyBadge(apy) {
+      if (parseFloat(apy) > 0) {
+        return `<span class="apy-badge positive">+${apy}%</span>`;
+      } else if (parseFloat(apy) < 0) {
+        return `<span class="apy-badge negative">${apy}%</span>`;
+      } else {
+        return `<span class="apy-badge">${apy}%</span>`;
+      }
+    }
+
+    async function update() {
+      const tbody = document.getElementById("body");
+      tbody.innerHTML = '';
+
+      for (let i = 0; i < pairs.length; i++) {
+        const pair = pairs[i];
+        try {
+          const [p, v] = await Promise.all([
+            getParadexRate(pair.paradex),
+            getVestRate(pair.vest)
+          ]);
+          const { longExchange, shortExchange, apyDiff } = decidePositions(p, v);
+          const tokenName = extractTokenName(pair.paradex);
+
+          tbody.innerHTML += `
+            <tr class="main-row" data-index="${i}">
+              <td>${tokenName}</td>
+              <td>${getApyBadge(apyDiff)}</td>
+              <td>${longExchange}</td>
+              <td>${shortExchange}</td>
+              <td class="${p >= 0 ? 'positive' : 'negative'}">${p.toFixed(6)}</td>
+              <td class="${v >= 0 ? 'positive' : 'negative'}">${v.toFixed(6)}</td>
+              <td>${new Date().toLocaleTimeString()}</td>
+            </tr>
+          `;
+        } catch (e) {
+          console.error('Erreur pour', pair.paradex, e);
+          tbody.innerHTML += `
+            <tr>
+              <td colspan="7" class="negative">Erreur chargement ${pair.paradex}: ${e.message}</td>
+            </tr>`;
+        }
+      }
+
+      // Ajout du gestionnaire de clic sur chaque ligne
+      Array.from(document.querySelectorAll('.main-row')).forEach(row => {
+        row.onclick = async function() {
+          // Fermer tout graphique ouvert
+          Array.from(document.querySelectorAll('.chart-row')).forEach(r => r.remove());
+
+          const idx = parseInt(this.getAttribute('data-index'));
+          const pair = pairs[idx];
+          const nextRow = this.nextSibling;
+
+          // Ajout d'une ligne sous la ligne cliquée
+          const chartRow = document.createElement('tr');
+          chartRow.className = "chart-row";
+          const chartTd = document.createElement('td');
+          chartTd.colSpan = 7;
+          chartTd.innerHTML = `<div class="chart-container" style="text-align:center;">
+            <b>APY 7j (VEST & Paradex)</b><br>
+            <canvas id="chart-${idx}" height="120"></canvas>
+            <div style="font-size:0.95em;color:#b7eaff;margin-top:0.6em;">APY annualisé calculé à partir des historiques de funding rates (7 derniers jours)</div>
+          </div>`;
+          chartRow.appendChild(chartTd);
+
+          // Insérer la ligne juste après la ligne cliquée
+          if (nextRow) this.parentNode.insertBefore(chartRow, nextRow);
+          else this.parentNode.appendChild(chartRow);
+
+          // Charger les historiques et afficher la courbe
+          try {
+            chartTd.querySelector('canvas').style.opacity = 0.5;
+            const [vestHistory, paradexHistory] = await Promise.all([
+              getVestHistory(pair.vest, 168), // 168 points = 7j
+              getParadexHistory(pair.paradex, 168) // 21 points = 7j
+            ]);
+            // Préparer les données pour Chart.js
+            const vestLabels = vestHistory.map((v, i) => {
+              const d = new Date(Date.now() - (vestHistory.length - 1 - i) * 3600 * 1000);
+              return `${d.getDate()}/${d.getMonth()+1}`;
+            });
+            const vestApy = vestHistory.map(e => (e.rate * FUNDING_FREQ.vest * 365 * 100));
+            const paradexLabels = paradexHistory.map((v, i) => {
+              const d = new Date(v.ts);
+              return `${d.getDate()}/${d.getMonth()+1}`;
+            });
+            const paradexApy = paradexHistory.map(e => (e.rate * FUNDING_FREQ.paradex * 365 * 100));
+            // Chart.js
+            const ctx = document.getElementById(`chart-${idx}`).getContext('2d');
+            new Chart(ctx, {
+              type: 'line',
+              data: {
+                labels: vestLabels,
+                datasets: [
+                  {
+                    label: 'APY VEST',
+                    data: vestApy,
+                    borderColor: '#4fd1c5',
+                    backgroundColor: 'rgba(79,209,197,0.12)',
+                    pointRadius: 0,
+                    borderWidth: 2,
+                    tension: 0.2
+                  },
+                  {
+                    label: 'APY Paradex',
+                    data: Array(vestApy.length - paradexApy.length).fill(null).concat(paradexApy),
+                    borderColor: '#38a1db',
+                    backgroundColor: 'rgba(56,161,219,0.12)',
+                    pointRadius: 0,
+                    borderWidth: 2,
+                    tension: 0.2
+                  }
+                ]
+              },
+              options: {
+                responsive: true,
+                plugins: {
+                  legend: { display: true, labels: { color: '#b7eaff' } },
+                  tooltip: { mode: 'index', intersect: false }
+                },
+                scales: {
+                  x: { display: false },
+                  y: {
+                    ticks: { color: '#b7eaff', font: { size: 12 } },
+                    grid: { color: 'rgba(79,209,197,0.08)' }
+                  }
+                }
+              }
+            });
+            chartTd.querySelector('canvas').style.opacity = 1;
+          } catch (e) {
+            chartTd.innerHTML = `<div style="color:#ff6b81;">Erreur chargement de l'historique : ${e.message}</div>`;
+          }
+        };
+      });
+    }
+
+    // Chargement initial
+    update();
+  </script>
+</body>
+</html>
