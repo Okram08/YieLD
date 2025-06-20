@@ -3,239 +3,207 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>YieLD – Villas de luxe au Lac de Côme</title>
-  <meta name="description" content="YieLD, location de maisons de luxe au lac de Côme. Une expérience inoubliable dans nos villas exceptionnelles.">
+  <title>YieLD – Locations de luxe au Lac de Côme</title>
+  <meta name="description" content="YieLD, agence professionnelle de location de maisons de luxe au lac de Côme en Italie. Vivez une expérience inoubliable dans nos villas d'exception.">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css">
   <style>
     :root {
-      --primary: #C8A97E;
-      --accent: #7E5835;
-      --bg: #F9F6F1;
-      --white: #fff;
-      --gold: #EAD7BD;
-      --shadow: 0 4px 30px rgba(0, 0, 0, 0.08);
+      --primary: #D4A373;
+      --accent: #8A5E3C;
+      --text: #4E392F;
+      --bg: #F9F6F2;
+      --white: #FFF;
+      --gold: #F1D6B8;
+      --shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
     }
-
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
     }
-
     body {
       font-family: 'Quicksand', sans-serif;
       background: var(--bg);
-      color: var(--accent);
+      color: var(--text);
       line-height: 1.6;
     }
-
     header {
       background: var(--white);
       box-shadow: var(--shadow);
-      padding: 1.5rem 2rem;
       position: sticky;
       top: 0;
-      z-index: 999;
+      z-index: 1000;
     }
-
     .navbar {
       display: flex;
       justify-content: space-between;
       align-items: center;
       max-width: 1200px;
       margin: 0 auto;
+      padding: 1rem 2rem;
     }
-
     .logo {
       font-family: 'Montserrat', sans-serif;
-      font-size: 2rem;
+      font-size: 1.8rem;
       font-weight: 700;
-      background: linear-gradient(90deg, var(--accent), var(--primary));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      color: var(--accent);
     }
-
     nav {
       display: flex;
       gap: 1.5rem;
     }
-
     nav a {
       text-decoration: none;
-      color: var(--accent);
+      color: var(--text);
       font-weight: 600;
-      position: relative;
+      transition: color 0.3s;
     }
-
-    nav a::after {
-      content: "";
-      position: absolute;
-      width: 100%;
-      height: 2px;
-      bottom: -4px;
-      left: 0;
-      background-color: var(--primary);
-      transform: scaleX(0);
-      transform-origin: right;
-      transition: transform 0.3s ease;
+    nav a:hover {
+      color: var(--primary);
     }
-
-    nav a:hover::after {
-      transform: scaleX(1);
-      transform-origin: left;
-    }
-
     .hero {
-      text-align: center;
-      padding: 4rem 1.5rem 3rem;
       background: url('Come1.png') center/cover no-repeat;
+      padding: 8rem 1.5rem 6rem;
+      text-align: center;
       color: var(--white);
       position: relative;
     }
-
     .hero::after {
       content: "";
       position: absolute;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.35);
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.3);
+      z-index: 0;
+    }
+    .hero h1,
+    .hero p,
+    .cta-btn {
+      position: relative;
       z-index: 1;
     }
-
-    .hero-content {
-      position: relative;
-      z-index: 2;
-      max-width: 800px;
-      margin: auto;
-    }
-
     .hero h1 {
+      font-size: 3rem;
       font-family: 'Montserrat', sans-serif;
-      font-size: 2.8rem;
       margin-bottom: 1rem;
     }
-
     .hero p {
-      font-size: 1.25rem;
-      margin-bottom: 2rem;
+      font-size: 1.2rem;
+      max-width: 600px;
+      margin: 0 auto 2rem;
     }
-
     .cta-btn {
       background: var(--primary);
-      color: var(--white);
-      padding: 0.8rem 2rem;
+      color: white;
+      padding: 0.9rem 2rem;
+      font-size: 1rem;
       border: none;
-      border-radius: 24px;
-      font-weight: bold;
-      font-size: 1.1rem;
+      border-radius: 40px;
       cursor: pointer;
       transition: background 0.3s;
     }
-
     .cta-btn:hover {
       background: var(--accent);
     }
-
     .section {
       padding: 4rem 1.5rem;
       max-width: 1200px;
-      margin: auto;
+      margin: 0 auto;
     }
-
     .section-title {
       font-family: 'Montserrat', sans-serif;
-      font-size: 2rem;
+      font-size: 2.4rem;
       text-align: center;
+      color: var(--accent);
       margin-bottom: 2rem;
     }
-
     .villas-list {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
       gap: 2rem;
     }
-
     .villa-card {
       background: var(--white);
       border-radius: 16px;
-      overflow: hidden;
       box-shadow: var(--shadow);
-      transition: transform 0.3s ease;
+      overflow: hidden;
+      transition: transform 0.2s;
     }
-
     .villa-card:hover {
       transform: translateY(-5px);
     }
-
     .villa-img {
       width: 100%;
       height: 200px;
       object-fit: cover;
     }
-
     .villa-info {
-      padding: 1rem 1.2rem;
+      padding: 1rem;
     }
-
     .villa-title {
-      font-weight: 700;
-      font-size: 1.2rem;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.3rem;
+      color: var(--accent);
       margin-bottom: 0.5rem;
     }
-
     .villa-desc {
-      font-size: 0.95rem;
-      color: #555;
+      font-size: 1rem;
+      color: var(--text);
+      margin-bottom: 1rem;
     }
-
     .villa-price {
-      margin-top: 0.8rem;
-      font-weight: bold;
+      font-weight: 700;
       color: var(--primary);
+      margin-bottom: 1rem;
     }
-
+    .villa-btn {
+      background: var(--primary);
+      color: white;
+      padding: 0.6rem 1.2rem;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background 0.3s;
+    }
+    .villa-btn:hover {
+      background: var(--accent);
+    }
     .about, .contact {
       background: var(--white);
-      border-radius: 20px;
-      padding: 2.5rem;
+      border-radius: 16px;
       box-shadow: var(--shadow);
+      padding: 2rem;
+      margin-top: 3rem;
     }
-
-    .about p, .contact p {
-      max-width: 700px;
-      margin: auto;
-    }
-
     .contact-form {
       display: flex;
       flex-direction: column;
       gap: 1rem;
-      margin-top: 2rem;
+      margin-top: 1rem;
     }
-
     .contact-form input,
     .contact-form textarea {
       padding: 0.8rem;
-      border-radius: 8px;
-      border: 1px solid #ddd;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      font-size: 1rem;
     }
-
     .contact-form button {
       background: var(--primary);
-      color: var(--white);
+      color: white;
       border: none;
-      border-radius: 20px;
-      padding: 0.7rem 2rem;
-      font-weight: bold;
+      padding: 0.8rem 2rem;
+      border-radius: 30px;
+      font-size: 1rem;
       cursor: pointer;
     }
-
     footer {
+      background: var(--accent);
+      color: white;
       text-align: center;
       padding: 2rem 1rem;
-      margin-top: 3rem;
-      background: var(--primary);
-      color: var(--white);
+      margin-top: 4rem;
     }
   </style>
 </head>
@@ -246,53 +214,59 @@
       <nav>
         <a href="#">Accueil</a>
         <a href="#villas">Villas</a>
-        <a href="#services">Services</a>
-        <a href="#about">À propos</a>
+        <a href="#a-propos">À propos</a>
         <a href="#contact">Contact</a>
       </nav>
     </div>
   </header>
 
   <section class="hero">
-    <div class="hero-content">
-      <h1>Villas de Luxe au Lac de Côme</h1>
-      <p>Confiez vos vacances à notre expertise et vivez une expérience unique au cœur de l’Italie.</p>
-      <a href="#contact" class="cta-btn">Demander un devis</a>
-    </div>
+    <h1>Maisons de luxe au Lac de Côme</h1>
+    <p>Vivez l’expérience ultime dans nos villas d’exception, au bord du légendaire lac de Côme.</p>
+    <a href="#contact" class="cta-btn">Demander un devis</a>
   </section>
 
   <section class="section" id="villas">
-    <div class="section-title">Nos Villas</div>
+    <h2 class="section-title">Nos villas d’exception</h2>
     <div class="villas-list">
       <div class="villa-card">
         <img src="Como2.png" alt="Villa Bellavista" class="villa-img">
         <div class="villa-info">
           <div class="villa-title">Villa Bellavista</div>
-          <div class="villa-desc">Vue panoramique, piscine chauffée et terrasse privée.</div>
-          <div class="villa-price">Dès 1200 €/nuit</div>
+          <div class="villa-desc">Vue panoramique, piscine chauffée et terrasse.</div>
+          <div class="villa-price">À partir de 1200€/nuit</div>
+          <button class="villa-btn">Réserver</button>
         </div>
       </div>
-      <!-- Autres villas ici... -->
+      <div class="villa-card">
+        <img src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429" alt="Palazzo Como" class="villa-img">
+        <div class="villa-info">
+          <div class="villa-title">Palazzo Como</div>
+          <div class="villa-desc">Palais historique avec accès direct au lac.</div>
+          <div class="villa-price">À partir de 2100€/nuit</div>
+          <button class="villa-btn">Réserver</button>
+        </div>
+      </div>
     </div>
   </section>
 
-  <section class="section about" id="about">
-    <div class="section-title">À propos de YieLD</div>
-    <p>Agence locale experte du lac de Côme, YieLD vous accompagne dans l’organisation de séjours sur-mesure dans les plus belles villas de la région.</p>
+  <section class="section about" id="a-propos">
+    <h2 class="section-title">Une équipe à votre service</h2>
+    <p>YieLD, agence locale experte, vous accompagne dans l'organisation de séjours sur-mesure : transferts, chefs privés, conciergerie, excursions.</p>
   </section>
 
   <section class="section contact" id="contact">
-    <div class="section-title">Contactez-nous</div>
-    <form class="contact-form" onsubmit="event.preventDefault(); alert('Message envoyé avec succès !');">
+    <h2 class="section-title">Contactez-nous</h2>
+    <form class="contact-form">
       <input type="text" placeholder="Votre nom" required>
       <input type="email" placeholder="Votre email" required>
-      <textarea placeholder="Votre message" required></textarea>
+      <textarea placeholder="Votre message"></textarea>
       <button type="submit">Envoyer</button>
     </form>
   </section>
 
   <footer>
-    &copy; 2025 YieLD – Villas de luxe au lac de Côme. Tous droits réservés.
+    &copy; 2025 YieLD – Location de villas de luxe au lac de Côme.
   </footer>
 </body>
 </html>
