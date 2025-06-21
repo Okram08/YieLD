@@ -42,17 +42,24 @@
       margin: 0 auto;
       padding: 1rem 2rem;
     }
-    .logo {
-      display: flex;
-      align-items: center;
-      /* Optionnel : ajuste la hauteur du conteneur logo si besoin */
-      height: 96px;
-    }
-    .logo img {
-      height: 80px; /* Ajuste la taille du logo ici */
-      width: auto;
-      display: block;
-    }
+.logo {
+  display: flex;
+  align-items: center;
+  height: 100px; /* pour une meilleure présence visuelle */
+  background: rgba(244, 236, 225, 0.7); /* léger fond doré pâle, harmonieux avec la DA */
+  border-radius: 18px;
+  padding: 0.5rem 1.2rem;
+  box-shadow: 0 2px 16px rgba(212,163,115,0.10);
+}
+
+.logo img {
+  height: 88px; /* taille bien visible */
+  width: auto;
+  display: block;
+  /* Optionnel : contour léger si le logo est clair */
+  /* border: 1.5px solid #D4A373; */
+}
+
     nav {
       display: flex;
       gap: 1.5rem;
@@ -221,9 +228,12 @@
 <body>
   <header>
     <div class="navbar">
-      <div class="logo">
-        <img src="logo.png" alt="YieLD logo">
-      </div>
+     <div class="logo">
+  <a href="index.html" style="display:inline-block;">
+    <img src="logo.png" alt="YieLD logo">
+  </a>
+</div>
+
       <nav>
         <a href="#villas">Villas</a>
         <a href="formules.html">Formules</a>
