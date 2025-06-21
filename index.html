@@ -56,8 +56,6 @@
       height: 80px;
       width: auto;
       display: block;
-      /* Optionnel : contour léger pour logo clair */
-      /* border: 1.2px solid #D4A373; */
     }
     nav {
       display: flex;
@@ -131,7 +129,7 @@
       color: var(--accent);
       margin-bottom: 2rem;
     }
-    /* Villas : disposition rectangulaire, harmonieuse */
+    /* Villas : disposition rectangulaire, harmonieuse et adaptative */
     .villa-card {
       background: var(--white);
       border-radius: 16px;
@@ -144,15 +142,14 @@
       margin-right: auto;
       display: flex;
       flex-direction: column;
-      aspect-ratio: 16/7;
-      min-height: 280px;
+      /* Suppression de aspect-ratio pour laisser la hauteur s'adapter au texte */
     }
     .villa-card:hover {
       transform: translateY(-5px) scale(1.01);
     }
     .villa-img {
       width: 100%;
-      height: 180px;
+      height: 200px;
       object-fit: cover;
       display: block;
       flex-shrink: 0;
@@ -179,6 +176,7 @@
       font-size: 1rem;
       color: var(--text);
       margin-bottom: 1rem;
+      /* Pas de contrainte de hauteur, tout le texte s'affiche */
     }
     .villa-price {
       font-weight: 700;
@@ -249,8 +247,6 @@
       }
       .villa-card {
         max-width: 98vw;
-        aspect-ratio: 16/10;
-        min-height: 200px;
       }
       .villa-img {
         height: 120px;
