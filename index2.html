@@ -3,12 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>YieLD | Locations de luxe au Lac de Côme</title>
+  <title>YieLD – Locations de luxe au Lac de Côme</title>
   <meta name="description" content="YieLD, agence professionnelle de location de maisons de luxe au lac de Côme en Italie. Vivez une expérience inoubliable dans nos villas d'exception.">
-  <meta property="og:title" content="YieLD | Villas de luxe au Lac de Côme">
-  <meta property="og:description" content="Maisons haut de gamme avec vue, piscine et services exclusifs.">
-  <meta property="og:image" content="Como1.png">
-  <link rel="icon" href="favicon.ico">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
   <style>
     :root {
@@ -20,19 +16,13 @@
       --gold: #F1D6B8;
       --shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
     }
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-    html {
-      scroll-behavior: smooth;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: 'Quicksand', sans-serif;
       background: var(--bg);
       color: var(--text);
       line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
     }
     header {
       background: var(--white);
@@ -45,46 +35,61 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0.35rem 2rem;
-      min-height: 60px;
+      padding: 0.5rem 1.2rem;
+      max-width: 100vw;
+      min-height: 56px;
+      position: relative;
     }
     .logo img {
-      height: 44px;
+      height: 48px;
       width: auto;
+      display: block;
+      transition: height 0.2s;
+    }
+    /* Hamburger menu */
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+      z-index: 2001;
+      margin-left: 8px;
+    }
+    .menu-toggle span {
+      height: 4px;
+      width: 28px;
+      background: var(--accent);
+      margin: 4px 0;
+      border-radius: 2px;
+      transition: 0.3s;
+      display: block;
     }
     nav {
       display: flex;
-      gap: 1.5rem;
+      gap: 1.2rem;
+      align-items: center;
     }
     nav a {
       text-decoration: none;
       color: var(--text);
       font-family: 'Montserrat', sans-serif;
       font-weight: 600;
-      font-size: 1.05rem;
-      padding: 0.2rem 0.4rem;
-      transition: color 0.2s;
+      font-size: 1.08rem;
+      padding: 0.4rem 0.7rem;
+      border-radius: 18px;
+      transition: background 0.2s, color 0.2s;
     }
-    nav a:hover {
-      color: var(--primary);
+    nav a:hover, nav a:focus {
+      background: var(--gold);
+      color: var(--accent);
+      outline: none;
     }
-    .menu-toggle {
-      display: none;
-      flex-direction: column;
-      cursor: pointer;
-      gap: 4px;
-    }
-    .menu-toggle span {
-      height: 3px;
-      width: 24px;
-      background: var(--text);
-      border-radius: 2px;
-    }
+    /* --- HERO --- */
     .hero {
       background: url('Como1.png') center/cover no-repeat;
-      padding: 8rem 1.5rem 6rem;
+      padding: 6rem 1rem 4rem;
       text-align: center;
       color: var(--white);
       position: relative;
@@ -92,123 +97,137 @@
     .hero::after {
       content: "";
       position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0,0,0,0.4);
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.32);
       z-index: 0;
     }
     .hero h1, .hero p, .cta-btn {
       position: relative;
       z-index: 1;
-      text-shadow: 0 2px 4px rgba(0,0,0,0.6);
     }
     .hero h1 {
-      font-size: 3rem;
+      font-size: 2.2rem;
       font-family: 'Montserrat', sans-serif;
       margin-bottom: 1rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
     }
     .hero p {
-      font-size: 1.2rem;
-      max-width: 600px;
+      font-size: 1.08rem;
+      max-width: 90vw;
       margin: 0 auto 2rem;
+      font-weight: 500;
     }
     .cta-btn {
       background: var(--primary);
       color: white;
-      padding: 0.9rem 2rem;
-      font-size: 1rem;
+      padding: 1rem 2.2rem;
+      font-size: 1.08rem;
       border: none;
       border-radius: 40px;
       cursor: pointer;
-      transition: all 0.3s ease;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 600;
+      transition: background 0.3s, color 0.2s;
+      margin-top: 1.2rem;
+      box-shadow: 0 2px 8px #D4A37330;
     }
-    .cta-btn:hover {
+    .cta-btn:hover, .cta-btn:focus {
       background: var(--accent);
-      transform: translateY(-2px);
+      color: var(--white);
+      outline: none;
     }
+    /* --- SECTIONS --- */
     .section {
-      padding: 4rem 1.5rem;
-      max-width: 1200px;
+      padding: 2.2rem 0.7rem;
+      max-width: 600px;
       margin: 0 auto;
     }
     .section-title {
       font-family: 'Montserrat', sans-serif;
-      font-size: 2.4rem;
+      font-size: 1.5rem;
       text-align: center;
       color: var(--accent);
-      margin-bottom: 2rem;
+      margin-bottom: 1.5rem;
+      font-weight: 700;
     }
+    /* --- VILLA CARDS --- */
     .villa-card {
       background: var(--white);
       border-radius: 16px;
       box-shadow: var(--shadow);
       overflow: hidden;
-      transition: transform 0.4s ease;
-      margin-bottom: 2.5rem;
-      max-width: 720px;
-      margin-left: auto;
-      margin-right: auto;
+      transition: transform 0.2s;
+      margin-bottom: 2.2rem;
+      width: 100%;
       display: flex;
       flex-direction: column;
-      aspect-ratio: 16/7;
-      min-height: 280px;
-      opacity: 0;
-      transform: translateY(30px);
+    }
+    .villa-card:hover {
+      transform: translateY(-3px) scale(1.01);
     }
     .villa-img {
       width: 100%;
-      height: 180px;
+      height: 170px;
       object-fit: cover;
+      display: block;
       flex-shrink: 0;
     }
     .villa-info {
-      padding: 1.3rem 1.2rem;
-      flex: 1 1 auto;
+      padding: 1.1rem 1rem 1rem 1rem;
       display: flex;
       flex-direction: column;
       justify-content: center;
     }
     .villa-title {
       font-family: 'Montserrat', sans-serif;
-      font-size: 1.3rem;
+      font-size: 1.12rem;
       color: var(--accent);
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.4rem;
+      font-weight: 700;
     }
     .villa-features {
-      font-size: 1.02rem;
+      font-size: 0.99rem;
       color: #8A5E3C;
-      margin-bottom: 0.7rem;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
     }
     .villa-desc {
-      font-size: 1rem;
+      font-size: 0.98rem;
       color: var(--text);
-      margin-bottom: 1rem;
+      margin-bottom: 0.7rem;
     }
     .villa-price {
       font-weight: 700;
       color: var(--primary);
-      margin-bottom: 1rem;
+      margin-bottom: 0.7rem;
+      font-size: 1.05rem;
     }
     .villa-btn {
       background: var(--primary);
       color: white;
-      padding: 0.6rem 1.2rem;
+      padding: 0.7rem 1.2rem;
       border: none;
       border-radius: 30px;
       cursor: pointer;
       font-weight: 600;
+      font-size: 1.02rem;
       transition: background 0.3s;
       align-self: flex-start;
+      margin-top: 0.2rem;
     }
-    .villa-btn:hover {
+    .villa-btn:hover, .villa-btn:focus {
       background: var(--accent);
+      color: #fff;
+      outline: none;
     }
+    /* --- ABOUT & CONTACT --- */
     .about, .contact {
       background: var(--white);
       border-radius: 16px;
       box-shadow: var(--shadow);
-      padding: 2rem;
-      margin-top: 3rem;
+      padding: 1.5rem 1rem;
+      margin-top: 2.2rem;
     }
     .contact-form {
       display: flex;
@@ -218,48 +237,99 @@
     }
     .contact-form input,
     .contact-form textarea {
-      padding: 0.8rem;
+      padding: 0.85rem;
       border: 1px solid #ccc;
       border-radius: 10px;
       font-size: 1rem;
+      font-family: inherit;
     }
     .contact-form button {
       background: var(--primary);
       color: white;
       border: none;
-      padding: 0.8rem 2rem;
+      padding: 0.9rem 2rem;
       border-radius: 30px;
-      font-size: 1rem;
+      font-size: 1.05rem;
       cursor: pointer;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 600;
+      margin-top: 0.3rem;
     }
-    .contact-form button:hover {
+    .contact-form button:hover, .contact-form button:focus {
       background: var(--accent);
+      color: #fff;
+      outline: none;
     }
     footer {
       background: var(--accent);
       color: white;
       text-align: center;
-      padding: 2rem 1rem;
-      margin-top: 4rem;
+      padding: 2rem 1rem 1rem 1rem;
+      margin-top: 3rem;
+      font-size: 1rem;
+      border-top-left-radius: 30px;
+      border-top-right-radius: 30px;
+      letter-spacing: 0.5px;
     }
-    @media (max-width: 900px) {
+    /* --- MOBILE NAV --- */
+    @media (max-width: 800px) {
       .navbar {
+        padding: 0.5rem 0.7rem;
+      }
+      .logo img {
+        height: 38px;
+      }
+      nav {
+        position: fixed;
+        top: 0;
+        right: -100vw;
+        height: 100vh;
+        width: 220px;
+        background: var(--white);
         flex-direction: column;
-        gap: 0.7rem;
-        padding: 0.5rem 1rem;
+        align-items: flex-start;
+        gap: 0;
+        padding: 4.5rem 1.2rem 1.2rem 1.2rem;
+        box-shadow: -2px 0 16px #0001;
+        transition: right 0.33s cubic-bezier(.68,-0.55,.27,1.55);
+        z-index: 2000;
+      }
+      nav.open {
+        right: 0;
+      }
+      nav a {
+        width: 100%;
+        padding: 1rem 0.4rem;
+        font-size: 1.08rem;
+        border-radius: 10px;
+        margin-bottom: 0.3rem;
       }
       .menu-toggle {
         display: flex;
       }
-      nav {
-        display: none;
-        flex-direction: column;
-        align-items: center;
-        width: 100%;
-        background: var(--white);
+    }
+    @media (max-width: 600px) {
+      .hero {
+        padding: 4.2rem 0.4rem 2.5rem;
       }
-      nav.active {
-        display: flex;
+      .hero h1 {
+        font-size: 1.35rem;
+      }
+      .section {
+        padding: 1.2rem 0.2rem;
+      }
+      .villa-img {
+        height: 110px;
+      }
+      .about, .contact {
+        padding: 1.1rem 0.6rem;
+      }
+      .logo img {
+        height: 32px;
+      }
+      nav {
+        width: 100vw;
+        padding: 4.5rem 1.1rem 1.2rem 1.1rem;
       }
     }
   </style>
@@ -268,16 +338,16 @@
   <header>
     <div class="navbar">
       <div class="logo">
-        <a href="index.html">
+        <a href="index.html" style="display:inline-block;">
           <img src="logo.png" alt="YieLD logo">
         </a>
       </div>
-      <div class="menu-toggle" onclick="document.querySelector('nav').classList.toggle('active')">
+      <div class="menu-toggle" id="menu-toggle" aria-label="Ouvrir le menu" tabindex="0">
         <span></span>
         <span></span>
         <span></span>
       </div>
-      <nav>
+      <nav id="main-nav">
         <a href="#villas">Villas</a>
         <a href="formules.html">Formules</a>
         <a href="#a-propos">À propos</a>
@@ -286,24 +356,93 @@
       </nav>
     </div>
   </header>
-  <!-- le reste reste inchangé, animations ajoutées plus bas avec JS -->
 
+  <section class="hero">
+    <h1>Maisons de luxe au Lac de Côme</h1>
+    <p>Vivez l’expérience ultime dans nos villas d’exception, au bord du légendaire lac de Côme.</p>
+    <a href="#contact" class="cta-btn">Demander un devis</a>
+  </section>
+
+  <section class="section" id="villas">
+    <h2 class="section-title">Nos villas d’exception</h2>
+
+    <!-- Villa 1 -->
+    <div class="villa-card">
+      <img src="Como2.png"
+           alt="Villa avec piscine et vue lac" class="villa-img" />
+      <div class="villa-info">
+        <div class="villa-title">Villa Bellavista</div>
+        <div class="villa-features">8 pers · 4 chambres · Piscine · Vue lac</div>
+        <div class="villa-desc">
+          Profitez d’une vue panoramique sur le lac de Côme depuis cette villa moderne avec piscine chauffée, jardin privé et terrasse ensoleillée.
+        </div>
+        <div class="villa-price">À partir de 1200 €/nuit</div>
+        <button class="villa-btn" onclick="window.location='#contact'">Réserver</button>
+      </div>
+    </div>
+    <!-- Villa 2 -->
+    <div class="villa-card">
+      <img src="Como3.png"
+           alt="Villa historique lac de Côme" class="villa-img" />
+      <div class="villa-info">
+        <div class="villa-title">Palazzo Como</div>
+        <div class="villa-features">12 pers · 6 chambres · Jardin · Accès lac</div>
+        <div class="villa-desc">
+          Un palais historique rénové, parfait pour les grandes familles ou événements, avec accès direct au lac et service de conciergerie.
+        </div>
+        <div class="villa-price">À partir de 2100 €/nuit</div>
+        <button class="villa-btn" onclick="window.location='#contact'">Réserver</button>
+      </div>
+    </div>
+    <!-- Villa 3 -->
+    <div class="villa-card">
+      <img src="Como4.png"
+           alt="Villa contemporaine lac de Côme" class="villa-img" />
+      <div class="villa-info">
+        <div class="villa-title">Villa Modernissima</div>
+        <div class="villa-features">10 pers · 5 chambres · Spa · Vue montagne</div>
+        <div class="villa-desc">
+          Design contemporain, spa privatif, larges baies vitrées : une retraite luxueuse pour se ressourcer au cœur de la nature.
+        </div>
+        <div class="villa-price">À partir de 1500 €/nuit</div>
+        <button class="villa-btn" onclick="window.location='#contact'">Réserver</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="section about" id="a-propos">
+    <h2 class="section-title">Une équipe à votre service</h2>
+    <p>YieLD, agence locale experte, vous accompagne dans l'organisation de séjours sur-mesure : transferts, chefs privés, conciergerie, excursions.</p>
+  </section>
+
+  <section class="section contact" id="contact">
+    <h2 class="section-title">Contactez-nous</h2>
+    <form class="contact-form">
+      <input type="text" placeholder="Votre nom" required>
+      <input type="email" placeholder="Votre email" required>
+      <textarea placeholder="Votre message"></textarea>
+      <button type="submit">Envoyer</button>
+    </form>
+  </section>
+
+  <footer>
+    &copy; 2025 YieLD – Location de villas de luxe au lac de Côme.
+  </footer>
   <script>
-    // Apparition animée des cartes villas
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.style.opacity = '1';
-          entry.target.style.transform = 'translateY(0)';
-          observer.unobserve(entry.target);
-        }
-      });
-    }, {
-      threshold: 0.2
+    // Mobile menu toggle
+    const toggle = document.getElementById('menu-toggle');
+    const nav = document.getElementById('main-nav');
+    toggle.addEventListener('click', () => {
+      nav.classList.toggle('open');
     });
-
-    document.querySelectorAll('.villa-card').forEach(card => {
-      observer.observe(card);
+    toggle.addEventListener('keypress', (e) => {
+      if (e.key === "Enter" || e.key === " ") nav.classList.toggle('open');
+    });
+    // Close menu when clicking a link (mobile)
+    document.querySelectorAll('nav a').forEach(link => {
+      link.addEventListener('click', () => {
+        nav.classList.remove('open');
+      });
     });
   </script>
 </body>
