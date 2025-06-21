@@ -127,24 +127,30 @@
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
       gap: 2rem;
     }
-    .villa-card {
-      background: var(--white);
-      border-radius: 16px;
-      box-shadow: var(--shadow);
-      overflow: hidden;
-      transition: transform 0.2s;
-    }
-    .villa-card:hover {
-      transform: translateY(-5px);
-    }
-    .villa-img {
-      width: 100%;
-      height: 200px;
-      object-fit: cover;
-    }
-    .villa-info {
-      padding: 1rem;
-    }
+.villa-card {
+  background: var(--white);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  transition: transform 0.2s;
+  margin-bottom: 2.5rem;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.villa-card:hover {
+  transform: translateY(-5px);
+}
+.villa-img {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  display: block;
+}
+.villa-info {
+  padding: 1.5rem 1.2rem 1.2rem 1.2rem;
+}
+
     .villa-title {
       font-family: 'Montserrat', sans-serif;
       font-size: 1.3rem;
@@ -234,52 +240,52 @@
     <a href="#contact" class="cta-btn">Demander un devis</a>
   </section>
   <section class="section" id="villas">
-    <h2 class="section-title">Nos villas d’exception</h2>
-    <div class="villas-list">
-      <!-- Villa 1 -->
-      <div class="villa-card">
-        <img src="Como2.png"
-             alt="Villa avec piscine et vue lac" class="villa-img" />
-        <div class="villa-info">
-          <div class="villa-title">Villa Bellavista</div>
-          <div class="villa-features">8 pers · 4 chambres · Piscine · Vue lac</div>
-          <div class="villa-desc">
-            Profitez d’une vue panoramique sur le lac de Côme depuis cette villa moderne avec piscine chauffée, jardin privé et terrasse ensoleillée.
-          </div>
-          <div class="villa-price">À partir de 1200 €/nuit</div>
-          <button class="villa-btn" onclick="window.location='#contact'">Réserver</button>
-        </div>
+  <h2 class="section-title">Nos villas d’exception</h2>
+
+  <!-- Villa 1 -->
+  <div class="villa-card">
+    <img src="Como2.png"
+         alt="Villa avec piscine et vue lac" class="villa-img" />
+    <div class="villa-info">
+      <div class="villa-title">Villa Bellavista</div>
+      <div class="villa-features">8 pers · 4 chambres · Piscine · Vue lac</div>
+      <div class="villa-desc">
+        Profitez d’une vue panoramique sur le lac de Côme depuis cette villa moderne avec piscine chauffée, jardin privé et terrasse ensoleillée.
       </div>
-      <!-- Villa 2 -->
-      <div class="villa-card">
-        <img src="Como3.png"
-             alt="Villa historique lac de Côme" class="villa-img" />
-        <div class="villa-info">
-          <div class="villa-title">Palazzo Como</div>
-          <div class="villa-features">12 pers · 6 chambres · Jardin · Accès lac</div>
-          <div class="villa-desc">
-            Un palais historique rénové, parfait pour les grandes familles ou événements, avec accès direct au lac et service de conciergerie.
-          </div>
-          <div class="villa-price">À partir de 2100 €/nuit</div>
-          <button class="villa-btn" onclick="window.location='#contact'">Réserver</button>
-        </div>
-      </div>
-      <!-- Villa 3 -->
-      <div class="villa-card">
-        <img src="Como4.png"
-             alt="Villa contemporaine lac de Côme" class="villa-img" />
-        <div class="villa-info">
-          <div class="villa-title">Villa Modernissima</div>
-          <div class="villa-features">10 pers · 5 chambres · Spa · Vue montagne</div>
-          <div class="villa-desc">
-            Design contemporain, spa privatif, larges baies vitrées : une retraite luxueuse pour se ressourcer au cœur de la nature.
-          </div>
-          <div class="villa-price">À partir de 1500 €/nuit</div>
-          <button class="villa-btn" onclick="window.location='#contact'">Réserver</button>
-        </div>
-      </div>
+      <div class="villa-price">À partir de 1200 €/nuit</div>
+      <button class="villa-btn" onclick="window.location='#contact'">Réserver</button>
     </div>
-  </section>
+  </div>
+  <!-- Villa 2 -->
+  <div class="villa-card">
+    <img src="Como3.png"
+         alt="Villa historique lac de Côme" class="villa-img" />
+    <div class="villa-info">
+      <div class="villa-title">Palazzo Como</div>
+      <div class="villa-features">12 pers · 6 chambres · Jardin · Accès lac</div>
+      <div class="villa-desc">
+        Un palais historique rénové, parfait pour les grandes familles ou événements, avec accès direct au lac et service de conciergerie.
+      </div>
+      <div class="villa-price">À partir de 2100 €/nuit</div>
+      <button class="villa-btn" onclick="window.location='#contact'">Réserver</button>
+    </div>
+  </div>
+  <!-- Villa 3 -->
+  <div class="villa-card">
+    <img src="Como4.png"
+         alt="Villa contemporaine lac de Côme" class="villa-img" />
+    <div class="villa-info">
+      <div class="villa-title">Villa Modernissima</div>
+      <div class="villa-features">10 pers · 5 chambres · Spa · Vue montagne</div>
+      <div class="villa-desc">
+        Design contemporain, spa privatif, larges baies vitrées : une retraite luxueuse pour se ressourcer au cœur de la nature.
+      </div>
+      <div class="villa-price">À partir de 1500 €/nuit</div>
+      <button class="villa-btn" onclick="window.location='#contact'">Réserver</button>
+    </div>
+  </div>
+</section>
+
 
   <section class="section about" id="a-propos">
     <h2 class="section-title">Une équipe à votre service</h2>
