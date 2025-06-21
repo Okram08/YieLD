@@ -16,11 +16,7 @@
       --gold: #F1D6B8;
       --shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
     }
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: 'Quicksand', sans-serif;
       background: var(--bg);
@@ -42,6 +38,7 @@
       margin: 0 auto;
       padding: 0.35rem 2rem 0.35rem 2rem;
       min-height: 60px;
+      position: relative;
     }
     .logo {
       display: flex;
@@ -56,10 +53,13 @@
       height: 120px;
       width: auto;
       display: block;
+      transition: height 0.2s;
     }
     nav {
       display: flex;
       gap: 1.5rem;
+      align-items: center;
+      transition: right 0.3s;
     }
     nav a {
       text-decoration: none;
@@ -68,10 +68,34 @@
       font-weight: 600;
       font-size: 1.05rem;
       padding: 0.2rem 0.4rem;
-      transition: color 0.2s;
+      transition: color 0.2s, background 0.2s;
+      border-radius: 18px;
     }
-    nav a:hover {
+    nav a:hover, nav a:focus {
       color: var(--primary);
+      background: var(--gold);
+      outline: none;
+    }
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+      z-index: 2001;
+      margin-left: 8px;
+      background: none;
+      border: none;
+    }
+    .menu-toggle span {
+      height: 4px;
+      width: 28px;
+      background: var(--accent);
+      margin: 4px 0;
+      border-radius: 2px;
+      transition: 0.3s;
+      display: block;
     }
     .hero-formule {
       background: url('Como1.png') center/cover no-repeat;
@@ -229,14 +253,43 @@
       padding: 2rem 1rem;
       margin-top: 4rem;
     }
+    /* --- MOBILE VERSION --- */
     @media (max-width: 900px) {
       .navbar {
-        flex-direction: column;
+        flex-direction: row;
         gap: 0.7rem;
         padding: 0.5rem 1rem 0.5rem 1rem;
       }
       .logo img {
-        height: 50px;
+        height: 80px;
+      }
+      .menu-toggle {
+        display: flex;
+      }
+      nav {
+        position: fixed;
+        top: 0;
+        right: -100vw;
+        height: 100vh;
+        width: 220px;
+        background: var(--white);
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0;
+        padding: 4.5rem 1.2rem 1.2rem 1.2rem;
+        box-shadow: -2px 0 16px #0001;
+        transition: right 0.33s cubic-bezier(.68,-0.55,.27,1.55);
+        z-index: 2000;
+      }
+      nav.open {
+        right: 0;
+      }
+      nav a {
+        width: 100%;
+        padding: 1rem 0.4rem;
+        font-size: 1.08rem;
+        border-radius: 10px;
+        margin-bottom: 0.3rem;
       }
       .formule-list {
         flex-direction: column;
@@ -244,6 +297,27 @@
       }
       .formule-card {
         width: 100%;
+      }
+    }
+    @media (max-width: 600px) {
+      .hero-formule {
+        padding: 4.2rem 0.4rem 2.5rem;
+      }
+      .hero-formule h1 {
+        font-size: 1.35rem;
+      }
+      .section {
+        padding: 1.2rem 0.2rem;
+      }
+      .about, .contact {
+        padding: 1.1rem 0.6rem;
+      }
+      .logo img {
+        height: 60px;
+      }
+      nav {
+        width: 100vw;
+        padding: 4.5rem 1.1rem 1.2rem 1.1rem;
       }
     }
   </style>
@@ -256,7 +330,12 @@
           <img src="logo.png" alt="YieLD logo">
         </a>
       </div>
-      <nav>
+      <button class="menu-toggle" id="menu-toggle" aria-label="Ouvrir le menu" tabindex="0">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <nav id="main-nav">
         <a href="index.html">Accueil</a>
         <a href="formules.html" aria-current="page">Formules</a>
         <a href="#contact">Contact</a>
@@ -312,5 +391,22 @@
   <footer>
     &copy; 2025 YieLD – Formules patrimoniales et investissement au lac de Côme.
   </footer>
+  <script>
+    // Mobile menu toggle
+    const toggle = document.getElementById('menu-toggle');
+    const nav = document.getElementById('main-nav');
+    toggle.addEventListener('click', () => {
+      nav.classList.toggle('open');
+    });
+    toggle.addEventListener('keypress', (e) => {
+      if (e.key === "Enter" || e.key === " ") nav.classList.toggle('open');
+    });
+    // Close menu when clicking a link (mobile)
+    document.querySelectorAll('nav a').forEach(link => {
+      link.addEventListener('click', () => {
+        nav.classList.remove('open');
+      });
+    });
+  </script>
 </body>
 </html>
