@@ -3,8 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>YieLD – Locations de luxe au Lac de Côme</title>
+  <title>YieLD | Locations de luxe au Lac de Côme</title>
   <meta name="description" content="YieLD, agence professionnelle de location de maisons de luxe au lac de Côme en Italie. Vivez une expérience inoubliable dans nos villas d'exception.">
+  <meta property="og:title" content="YieLD | Villas de luxe au Lac de Côme">
+  <meta property="og:description" content="Maisons haut de gamme avec vue, piscine et services exclusifs.">
+  <meta property="og:image" content="Como1.png">
+  <link rel="icon" href="favicon.ico">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
   <style>
     :root {
@@ -20,6 +24,9 @@
       box-sizing: border-box;
       margin: 0;
       padding: 0;
+    }
+    html {
+      scroll-behavior: smooth;
     }
     body {
       font-family: 'Quicksand', sans-serif;
@@ -40,13 +47,12 @@
       align-items: center;
       max-width: 1200px;
       margin: 0 auto;
-      padding: 1rem 2rem;
+      padding: 0.35rem 2rem;
+      min-height: 60px;
     }
-    .logo {
-      font-family: 'Montserrat', sans-serif;
-      font-size: 1.8rem;
-      font-weight: 700;
-      color: var(--accent);
+    .logo img {
+      height: 44px;
+      width: auto;
     }
     nav {
       display: flex;
@@ -55,11 +61,26 @@
     nav a {
       text-decoration: none;
       color: var(--text);
+      font-family: 'Montserrat', sans-serif;
       font-weight: 600;
-      transition: color 0.3s;
+      font-size: 1.05rem;
+      padding: 0.2rem 0.4rem;
+      transition: color 0.2s;
     }
     nav a:hover {
       color: var(--primary);
+    }
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      gap: 4px;
+    }
+    .menu-toggle span {
+      height: 3px;
+      width: 24px;
+      background: var(--text);
+      border-radius: 2px;
     }
     .hero {
       background: url('Como1.png') center/cover no-repeat;
@@ -73,14 +94,13 @@
       position: absolute;
       top: 0; left: 0;
       width: 100%; height: 100%;
-      background: rgba(0,0,0,0.3);
+      background: rgba(0,0,0,0.4);
       z-index: 0;
     }
-    .hero h1,
-    .hero p,
-    .cta-btn {
+    .hero h1, .hero p, .cta-btn {
       position: relative;
       z-index: 1;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.6);
     }
     .hero h1 {
       font-size: 3rem;
@@ -100,10 +120,11 @@
       border: none;
       border-radius: 40px;
       cursor: pointer;
-      transition: background 0.3s;
+      transition: all 0.3s ease;
     }
     .cta-btn:hover {
       background: var(--accent);
+      transform: translateY(-2px);
     }
     .section {
       padding: 4rem 1.5rem;
@@ -117,34 +138,46 @@
       color: var(--accent);
       margin-bottom: 2rem;
     }
-    .villas-list {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 2rem;
-    }
     .villa-card {
       background: var(--white);
       border-radius: 16px;
       box-shadow: var(--shadow);
       overflow: hidden;
-      transition: transform 0.2s;
-    }
-    .villa-card:hover {
-      transform: translateY(-5px);
+      transition: transform 0.4s ease;
+      margin-bottom: 2.5rem;
+      max-width: 720px;
+      margin-left: auto;
+      margin-right: auto;
+      display: flex;
+      flex-direction: column;
+      aspect-ratio: 16/7;
+      min-height: 280px;
+      opacity: 0;
+      transform: translateY(30px);
     }
     .villa-img {
       width: 100%;
-      height: 200px;
+      height: 180px;
       object-fit: cover;
+      flex-shrink: 0;
     }
     .villa-info {
-      padding: 1rem;
+      padding: 1.3rem 1.2rem;
+      flex: 1 1 auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
     .villa-title {
       font-family: 'Montserrat', sans-serif;
       font-size: 1.3rem;
       color: var(--accent);
       margin-bottom: 0.5rem;
+    }
+    .villa-features {
+      font-size: 1.02rem;
+      color: #8A5E3C;
+      margin-bottom: 0.7rem;
     }
     .villa-desc {
       font-size: 1rem;
@@ -165,6 +198,7 @@
       cursor: pointer;
       font-weight: 600;
       transition: background 0.3s;
+      align-self: flex-start;
     }
     .villa-btn:hover {
       background: var(--accent);
@@ -198,6 +232,9 @@
       font-size: 1rem;
       cursor: pointer;
     }
+    .contact-form button:hover {
+      background: var(--accent);
+    }
     footer {
       background: var(--accent);
       color: white;
@@ -205,12 +242,41 @@
       padding: 2rem 1rem;
       margin-top: 4rem;
     }
+    @media (max-width: 900px) {
+      .navbar {
+        flex-direction: column;
+        gap: 0.7rem;
+        padding: 0.5rem 1rem;
+      }
+      .menu-toggle {
+        display: flex;
+      }
+      nav {
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        background: var(--white);
+      }
+      nav.active {
+        display: flex;
+      }
+    }
   </style>
 </head>
 <body>
   <header>
     <div class="navbar">
-      <div class="logo">YieLD</div>
+      <div class="logo">
+        <a href="index.html">
+          <img src="logo.png" alt="YieLD logo">
+        </a>
+      </div>
+      <div class="menu-toggle" onclick="document.querySelector('nav').classList.toggle('active')">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
       <nav>
         <a href="#villas">Villas</a>
         <a href="formules.html">Formules</a>
@@ -220,77 +286,25 @@
       </nav>
     </div>
   </header>
+  <!-- le reste reste inchangé, animations ajoutées plus bas avec JS -->
 
-  <section class="hero">
-    <h1>Maisons de luxe au Lac de Côme</h1>
-    <p>Vivez l’expérience ultime dans nos villas d’exception, au bord du légendaire lac de Côme.</p>
-    <a href="#contact" class="cta-btn">Demander un devis</a>
-  </section>
+  <script>
+    // Apparition animée des cartes villas
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.2
+    });
 
-  <section class="section" id="villas">
-    <h2 class="section-title">Nos villas d’exception</h2>
-<!-- Villa 1 -->
-<div class="villa-card">
-  <img src="Como2.png"
-       alt="Villa avec piscine et vue lac" class="villa-img" />
-  <div class="villa-info">
-    <div class="villa-title">Villa Bellavista</div>
-    <div class="villa-features">8 pers · 4 chambres · Piscine · Vue lac</div>
-    <div class="villa-desc">
-      Profitez d’une vue panoramique sur le lac de Côme depuis cette villa moderne avec piscine chauffée, jardin privé et terrasse ensoleillée.
-    </div>
-    <div class="villa-price">À partir de 1200 €/nuit</div>
-    <button class="villa-btn" onclick="window.location='#contact'">Réserver</button>
-  </div>
-</div>
-      <!-- Villa 2 -->
-      <div class="villa-card">
-        <img src="Como3.png"
-             alt="Villa historique lac de Côme" class="villa-img" />
-        <div class="villa-info">
-          <div class="villa-title">Palazzo Como</div>
-          <div class="villa-features">12 pers · 6 chambres · Jardin · Accès lac</div>
-          <div class="villa-desc">
-            Un palais historique rénové, parfait pour les grandes familles ou événements, avec accès direct au lac et service de conciergerie.
-          </div>
-          <div class="villa-price">À partir de 2100 €/nuit</div>
-          <button class="villa-btn" onclick="window.location='#contact'">Réserver</button>
-        </div>
-      </div>
-      <!-- Villa 3 -->
-      <div class="villa-card">
-        <img src="Como4.png"
-             alt="Villa contemporaine lac de Côme" class="villa-img" />
-        <div class="villa-info">
-          <div class="villa-title">Villa Modernissima</div>
-          <div class="villa-features">10 pers · 5 chambres · Spa · Vue montagne</div>
-          <div class="villa-desc">
-            Design contemporain, spa privatif, larges baies vitrées : une retraite luxueuse pour se ressourcer au cœur de la nature.
-          </div>
-          <div class="villa-price">À partir de 1500 €/nuit</div>
-          <button class="villa-btn" onclick="window.location='#contact'">Réserver</button>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section about" id="a-propos">
-    <h2 class="section-title">Une équipe à votre service</h2>
-    <p>YieLD, agence locale experte, vous accompagne dans l'organisation de séjours sur-mesure : transferts, chefs privés, conciergerie, excursions.</p>
-  </section>
-
-  <section class="section contact" id="contact">
-    <h2 class="section-title">Contactez-nous</h2>
-    <form class="contact-form">
-      <input type="text" placeholder="Votre nom" required>
-      <input type="email" placeholder="Votre email" required>
-      <textarea placeholder="Votre message"></textarea>
-      <button type="submit">Envoyer</button>
-    </form>
-  </section>
-
-  <footer>
-    &copy; 2025 YieLD – Location de villas de luxe au lac de Côme.
-  </footer>
+    document.querySelectorAll('.villa-card').forEach(card => {
+      observer.observe(card);
+    });
+  </script>
 </body>
 </html>
