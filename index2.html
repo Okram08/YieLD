@@ -2,79 +2,93 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Recherche de Biens Booking.com</title>
+  <title>Détail Hôtel Booking.com</title>
   <style>
-    body { font-family: Arial, sans-serif; background: #f8f8f8; margin: 0; }
-    .container { max-width: 900px; margin: 30px auto; background: #fff; border-radius: 12px; box-shadow: 0 2px 8px #ddd; padding: 24px; }
-    .filters { display: flex; gap: 16px; margin-bottom: 20px; }
-    .card { background: #f0f0f0; border-radius: 10px; padding: 18px; margin-bottom: 16px; box-shadow: 0 1px 4px #ccc; }
-    .card h3 { margin-top: 0; }
-    @media (max-width: 600px) {
-      .filters { flex-direction: column; }
-      .container { padding: 10px; }
-    }
+    body { font-family: Arial, sans-serif; background: #f8f8f8; }
+    .container { max-width: 800px; margin: 40px auto; background: #fff; border-radius: 10px; box-shadow: 0 2px 8px #ddd; padding: 24px; }
+    .filters { margin-bottom: 20px; }
+    .card { background: #f0f0f0; border-radius: 8px; padding: 16px; margin-bottom: 14px; }
+    .card h3 { margin: 0 0 8px 0; }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>Biens Booking.com</h1>
+    <h1>Détail de l'hôtel</h1>
     <div class="filters">
-      <select id="availabilityFilter">
-        <option value="all">Tous</option>
+      <label for="availabilityFilter">Filtrer les chambres :</label>
+      <select id="availabilityFilter" onchange="filterRooms()">
+        <option value="all">Toutes</option>
         <option value="available">Disponibles</option>
-        <option value="reserved">Réservés</option>
+        <option value="reserved">Réservées</option>
       </select>
-      <button onclick="fetchProperties()">Rechercher</button>
+      <button onclick="fetchHotelDetails()">Actualiser</button>
     </div>
-    <div id="results"></div>
+    <div id="results">Chargement...</div>
   </div>
 
   <script>
-    async function fetchProperties() {
-      const filter = document.getElementById('availabilityFilter').value;
-      // Remplace l'URL ci-dessous par l'endpoint réel de l’API Booking ou de ton fournisseur partenaire
-      const apiUrl = 'https://api.booking.com/properties?city=Paris'; // EXEMPLE
-      const apiKey = 'VOTRE_CLE_API'; // À remplacer
+    let allRooms = [];
+
+    async function fetchHotelDetails() {
+      document.getElementById('results').innerHTML = "Chargement...";
+
+      const url = 'https://booking-com-api4.p.rapidapi.com/hotel/detail/?hotel_url=https%3A%2F%2Fwww.booking.com%2Fhotel%2Fin%2Folive-serviced-apartments-btm-layout.html';
 
       try {
-        const response = await fetch(apiUrl, {
-          headers: { 'Authorization': `Bearer ${apiKey}` }
+        const response = await fetch(url, {
+          method: 'GET',
+          headers: {
+            'x-rapidapi-host': 'booking-com-api4.p.rapidapi.com',
+            'x-rapidapi-key': 'VOTRE_CLE_RAPIDAPI' // Remplace ici !
+          }
         });
         const data = await response.json();
 
-        // Supposons que chaque bien a un champ "is_available" (booléen)
-        let properties = data.properties || [];
+        // Affiche la structure pour adapter le code si besoin
+        // console.log(data);
 
-        if (filter === 'available') {
-          properties = properties.filter(p => p.is_available);
-        } else if (filter === 'reserved') {
-          properties = properties.filter(p => !p.is_available);
-        }
+        // Supposons que les chambres sont dans data.rooms ou data.room_list
+        allRooms = data.rooms || data.room_list || [];
 
-        displayResults(properties);
+        filterRooms();
       } catch (error) {
-        document.getElementById('results').innerHTML = "<p>Erreur lors du chargement des biens.</p>";
+        document.getElementById('results').innerHTML = "Erreur lors du chargement.";
       }
     }
 
-    function displayResults(properties) {
+    function filterRooms() {
+      const filter = document.getElementById('availabilityFilter').value;
+      let filtered = allRooms;
+
+      // Adapte ce champ selon la structure réelle de la réponse API
+      // Par exemple, si chaque chambre a un champ "is_available" ou "available"
+      if (filter === 'available') {
+        filtered = allRooms.filter(room => room.is_available === true || room.available === true);
+      } else if (filter === 'reserved') {
+        filtered = allRooms.filter(room => room.is_available === false || room.available === false);
+      }
+
+      displayRooms(filtered);
+    }
+
+    function displayRooms(rooms) {
       const results = document.getElementById('results');
-      if (!properties.length) {
-        results.innerHTML = "<p>Aucun bien trouvé.</p>";
+      if (!rooms.length) {
+        results.innerHTML = "<p>Aucune chambre trouvée.</p>";
         return;
       }
-      results.innerHTML = properties.map(p => `
+      results.innerHTML = rooms.map(room => `
         <div class="card">
-          <h3>${p.name}</h3>
-          <p>${p.address}</p>
-          <p><strong>${p.is_available ? "Disponible" : "Réservé"}</strong></p>
+          <h3>${room.name || room.room_name || 'Chambre'}</h3>
+          <p>Type : ${room.type || 'N/A'}</p>
+          <p>Prix : ${room.price ? room.price : 'N/A'}</p>
+          <p><strong>${(room.is_available || room.available) ? "Disponible" : "Réservée"}</strong></p>
         </div>
       `).join('');
     }
 
     // Chargement initial
-    fetchProperties();
+    fetchHotelDetails();
   </script>
 </body>
 </html>
